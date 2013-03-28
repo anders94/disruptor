@@ -1,0 +1,16 @@
+{
+    "name": "disruptor"
+  , "version": "0.0.1"
+  , "description": "A distributed fault-tolerant real-time computation platform."
+  , "homepage": "https://github.com/anders94/disruptor"
+  , "author": "Anders Brownworth <andersbrownworth@gmail.com>"
+  , "repository":{
+        "type": "git"
+      , "url": "https://github.com/anders94/disruptor.git"
+    }
+  , "dependencies": {
+      "node-uuid": ">= 1.4.0"
+    }
+  , "main": "index"
+  , "engines": { "node": ">= 0.4.0" }
+}
