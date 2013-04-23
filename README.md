@@ -6,7 +6,7 @@ Warning: This is alpha code. I'm still in the design stage so things will change
 **disruptor** intends to be a distributed fault-tolerant real-time computation platform. Eventually
 it may include a distributed hash table and filesystem as well.
 
-Setup
+Install
 -----
     npm install disruptor
 
