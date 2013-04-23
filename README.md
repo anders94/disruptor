@@ -18,12 +18,15 @@ Usage
 Example
 -------
 In the first shell:
+
     node peer 127.0.0.1:1111 127.0.0.1:22222
 
 In the second shell:
+
     node peer 127.0.0.1:2222 127.0.0.1:11111
 
 Each process should find the other. To see what nodes the first process knows about:
+
     curl http://127.0.0.1:1111
 
 TODO
