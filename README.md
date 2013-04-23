@@ -8,7 +8,8 @@ it may include a distributed hash table and filesystem as well.
 
 Install
 -----
-    npm install disruptor
+    git clone https://github.com/anders94/disruptor.git
+    cd disruptor/
 
 Usage
 -----
