@@ -1,6 +1,6 @@
 {
     "name": "disruptor"
-  , "version": "0.0.1"
+  , "version": "0.0.2"
   , "description": "Distributed real-time computation system."
   , "homepage": "https://github.com/anders94/disruptor"
   , "author": "Anders Brownworth <andersbrownworth@gmail.com>"
