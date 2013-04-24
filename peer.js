@@ -5,7 +5,7 @@ var util = require('util'),
 if (process.argv.length>3) {
     var me = process.argv[2];
     var universe = {};
-    universe[process.argv[3]] = {firstSeen: -1, lastSeen: -1};
+    universe[process.argv[3]] = {firstSeen: -1, lastSeen: -1, down: true};
 
     var server = restify.createServer();
     server.use(restify.bodyParser());
@@ -16,7 +16,9 @@ if (process.argv.length>3) {
 	    console.log('disruptor peer listening at %s', server.url);
 	});
 
-    pollPeers();
+    setTimeout( function() {
+	    pollPeers();
+	}, 25);
     setInterval( function() {
 	    pollPeers();
 	}, 10000);
@@ -31,36 +33,37 @@ else {
 }
 
 function pollPeers() {
-    console.log('polling peers');
+    //console.log('polling peers');
     for (var url in universe) {
-	var client = restify.createJsonClient({
-		url: 'http://'+url,
-		version: '*'
-	    });
-	//console.log('  checking '+client.url.href);
-	client.post('/hello/' + getHost(me) + '/' + getPort(me), universe, function(err, req, res, u) {
-		for(var key in universe) {
-		    if (key == req._headers.host) {
-			if (err != null) {
-			    console.log('  removing '+key);
-			    universe[key].down = true;
+        setTimeout( function(url) {
+		var client = restify.createJsonClient({
+			url: 'http://'+url,
+			version: '*'
+		    });
+		console.log('  checking '+client.url.href);
+		client.post('/hello/' + getHost(me) + '/' + getPort(me), universe, function(err, req, res, u) {
+			for(var key in universe) {
+			    if (key == req._headers.host) {
+				if (err != null) {
+				    console.log('  removing '+key);
+				    universe[key].down = true;
+				}
+				else {
+				    universe[key].down = false;
+				    universe[key].lastSeen = new Date().getTime();
+				    if (universe[key].firstSeen == -1) {
+					console.log('  adding '+key);
+					universe[key].firstSeen = universe[key].lastSeen;
+				    }
+				    break;
+				}
+			    }
+			    if (err == null) {
+				union(u);
+			    }
 			}
-			else {
-			    //console.log('  in contact with '+key);
-			    universe[key].down = false;
-			    universe[key].lastSeen = new Date().getTime();
-			    if (universe[key].firstSeen == -1)
-				universe[key].firstSeen = universe[key].lastSeen;
-			}
-			break;
-		    }
-		}
-		if (err == null) {
-		    union(u);
-		    //console.log('  received universe: %j', u);
-		}
-	    });
-	//}, 1000+rndInt(250));
+		    });
+	    }, rndInt(2000), url);
     }
 }
 
@@ -112,8 +115,19 @@ function getPort(s) {
 
 // http routines
 function index(req, res, next) {
-    res.send(util.inspect(universe));
-    return(next);
+    var connections = 0;
+    var s = "<html><body><h1>Peer Status</h1>";
+    for (var key in universe) {
+	if (!universe[key].down) {
+	    s = s+'+ '+key+'<br>';
+	    connections += 1;
+	}
+	else
+	    console.log('- '+key+'<br>');
+    }
+    s = s+'<br>'+connections+' connections<br></body></html>';
+    res.send(s);
+    next();
 }
 
 function hello(req, res, next) {
@@ -133,5 +147,5 @@ function hello(req, res, next) {
 	universe[remote].down = false;
     }
     union(req.body);
-    return(next);
+    next();
 }
