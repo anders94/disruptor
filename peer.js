@@ -2,6 +2,8 @@ var util = require('util'),
     crypto = require('crypto'),
     restify = require('restify');
 
+var verbose = false;
+
 if (process.argv.length>3) {
     var me = process.argv[2];
     var universe = {};
@@ -21,11 +23,12 @@ if (process.argv.length>3) {
 	}, 25);
     setInterval( function() {
 	    pollPeers();
-	}, 10000);
+	}, 50000);
 
-    setInterval( function() {
-	    stats();
-	}, 2000);
+    if (verbose)
+	setInterval( function() {
+		stats();
+	    }, 2000);
 
 }
 else {
@@ -33,14 +36,16 @@ else {
 }
 
 function pollPeers() {
-    //console.log('polling peers');
+    if (verbose)
+	console.log('polling peers');
     for (var url in universe) {
         setTimeout( function(url) {
 		var client = restify.createJsonClient({
 			url: 'http://'+url,
 			version: '*'
 		    });
-		console.log('  checking '+client.url.href);
+		if (verbose)
+		    console.log('  checking '+client.url.href);
 		client.post('/hello/' + getHost(me) + '/' + getPort(me), universe, function(err, req, res, u) {
 			for(var key in universe) {
 			    if (key == req._headers.host) {
@@ -95,7 +100,8 @@ function union(u) { // add in whatever peers we don't already know about
 		u[uk].lastSeen = -1;
 		u[uk].down = true;
 		universe[uk] = u[uk]; // add it to our universe
-		//console.log('  potential peer: '+uk);
+		if (verbose)
+		    console.log('  potential peer: '+uk);
 	    }
 	}
     }
@@ -137,18 +143,22 @@ function index(req, res, next) {
 }
 
 function hello(req, res, next) {
-    //console.log('request from '+req.params.host+':'+req.params.port);
+    if (verbose)
+	console.log('request from '+req.params.host+':'+req.params.port);
     res.send(universe);
     var remote = req.params.host+':'+req.params.port;
     var now = new Date().getTime();
     if (typeof universe[remote] === 'undefined') {
-	//console.log('  adding '+remote);
+	console.log('  adding '+remote);
 	universe[remote] = {firstSeen:now, lastSeen:now, down:false};
     }
     else {
-	//console.log('  updating '+remote);
-	if (universe[remote].firstSeen == -1)
+	if (verbose)
+	    console.log('  updating '+remote);
+	if (universe[remote].firstSeen == -1) {
 	    universe[remote].firstSeen = now;
+	    console.log('  adding '+remote);
+	}
 	universe[remote].lastSeen = now;
 	universe[remote].down = false;
     }
