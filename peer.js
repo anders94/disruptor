@@ -116,16 +116,16 @@ function getPort(s) {
 // http routines
 function index(req, res, next) {
     var connections = 0;
-    var s = "<html><body><h1>Peer Status</h1>";
+    var s = "<html><body><h1>"+me+" disruptor status</h1>";
     for (var key in universe) {
 	if (!universe[key].down) {
-	    s = s+'+ '+key+'<br>';
+	    s = s+'+ <a href="http://'+key+'">'+key+'</a><br>';
 	    connections += 1;
 	}
 	else
-	    console.log('- '+key+'<br>');
+	    s = s+'- '+key+'<br>';
     }
-    s = s+'<br>'+connections+' connections<br></body></html>';
+    s = s+'<br>'+connections+' active connections<br></body></html>';
 
     res.writeHead(200, {
             'Content-Length': Buffer.byteLength(s),
