@@ -126,7 +126,13 @@ function index(req, res, next) {
 	    console.log('- '+key+'<br>');
     }
     s = s+'<br>'+connections+' connections<br></body></html>';
-    res.send(s);
+
+    res.writeHead(200, {
+            'Content-Length': Buffer.byteLength(s),
+	    'Content-Type': 'text/html'
+	});
+    res.write(s);
+    res.end();
     next();
 }
 
