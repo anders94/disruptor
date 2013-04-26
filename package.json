@@ -15,5 +15,5 @@
       "restify": ">= 2.4.1"
     }
   , "main": "index"
-  , "engines": { "node": ">= 0.8.14" }
+  , "engines": { "node": ">= 0.8.0" }
 }
