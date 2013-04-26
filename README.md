@@ -11,7 +11,7 @@ peer when they are started and eventually find all the other live peers in a net
 written in javascript with json data payloads are sent to any node in the network which distributes
 the job amongst the live nodes. Results are then collated and returned to the requestor. There is no 
 master peer, monitoring node or other single point of failure and simplicity is stressed throught the 
-system. Eventually, disruptor may include a distributed hash table and / or filesystem.
+system.
 
 Install
 -----
