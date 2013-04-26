@@ -1,17 +1,17 @@
 disruptor
 =========
 
+***Warning: This is alpha code.*** Things are in the design stage so they may change without notice.
+
 <img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
 
-Warning: This is alpha code. Things are in the design stage so they may change without notice.
-
-**disruptor** intends to be a distributed fault-tolerant real-time computation node.js platform. It 
-has minimal configuration requirements and no single point of failure. Nodes are told about one other 
-peer when they are started and eventually find all the other live peers in a network. Compute jobs 
-written in javascript with json data payloads are sent to any node in the network which distributes
-the job amongst the live nodes. Results are then collated and returned to the requestor. There is no 
-master peer, monitoring node or other single point of failure and simplicity is stressed throught the 
-system.
+**disruptor** intends to be a distributed fault-tolerant real-time computation platform written in 
+node.js. It has minimal configuration requirements and no single point of failure. Nodes are started 
+by being pointed at another peer and they quickly find all the other nodes in the network. JavaScript
+compute jobs and json data payloads can be sent to one of the nodes in the network which will distribute
+it amongst all the other live nodes. Results are then collated and returned to the requestor. There 
+is no master peer, monitoring node or other single point of failure in the system and the design 
+stresses simplicity at every turn.
 
 Install
 -----
@@ -27,22 +27,22 @@ The application takes an IP and port on which to listen and the IP and port of s
 on the network. All the peers will find eachother and stay in communication as peers enter and
 leave the network.
 
-    node peer myHost:myPort anotherHost:anotherPort
+    node disruptor myHost:myPort anotherHost:anotherPort
 
 Example
 -------
 In the first shell:
 
-    node peer 127.0.0.1:1111 127.0.0.1:22222
+    node disruptor 127.0.0.1:1111 127.0.0.1:22222
 
 In the second shell:
 
-    node peer 127.0.0.1:2222 127.0.0.1:11111
+    node disruptor 127.0.0.1:2222 127.0.0.1:11111
 
 The processes should find eachother. Start a few more and point each to one of the live nodes in 
 the network and they should all find eachother.
 
-To see what nodes the first process knows about, visit the peer in a browser:
+To see what other nodes the first disruptor peer knows about, visit it with a web browser:
 
     http://127.0.0.1:1111
 
