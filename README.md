@@ -1,6 +1,8 @@
 disruptor
 =========
 
+<img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
+
 Warning: This is alpha code. Things are in the design stage so they may change without notice.
 
 **disruptor** intends to be a distributed fault-tolerant real-time computation platform with 
@@ -42,12 +44,15 @@ To see what nodes the first process knows about, visit the peer in a browser:
 
 TODO
 ----
-Currently the nodes can find eachother and notice when nodes go away. Each node shows a simple
-web interface displaying all the peers it knows about and their status within the network.
-
-The next step is to enable a computational request to one of the nodes which will vend
-it out to all the nodes it knows are alive. That node, acting as master, will collect all
-the results and feed them back to the requestor.
+* support a compute request on a single node
+** accept some code to execute
+** accept some data to work with
+** run the job
+** return the result to the requestor
+* enable a single computational request to one of the nodes
+** send the request to all nodes this node knows about
+** wait for all the responses
+** sew up all the results and feed them back to the requestor
 
 Author
 ------
