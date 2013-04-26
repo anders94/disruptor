@@ -5,9 +5,13 @@ disruptor
 
 Warning: This is alpha code. Things are in the design stage so they may change without notice.
 
-**disruptor** intends to be a distributed fault-tolerant real-time computation platform with 
-minimal configuration requirements. Eventually it may include a distributed hash table and 
-filesystem.
+**disruptor** intends to be a distributed fault-tolerant real-time computation node.js platform. It 
+has minimal configuration requirements and no single point of failure. Nodes are told about one other 
+peer when they are started and eventually find all the other live peers in a network. Compute jobs 
+written in javascript with json data payloads are sent to any node in the network which distributes
+the job amongst the live nodes. Results are then collated and returned to the requestor. There is no 
+master peer, monitoring node or other single point of failure and simplicity is stressed throught the 
+system. Eventually, disruptor may include a distributed hash table and / or filesystem.
 
 Install
 -----
