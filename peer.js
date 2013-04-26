@@ -38,38 +38,43 @@ else {
 function pollPeers() {
     if (verbose)
 	console.log('polling peers');
-    for (var url in universe) {
-        setTimeout( function(url) {
-		var client = restify.createJsonClient({
-			url: 'http://'+url,
-			version: '*'
-		    });
-		if (verbose)
-		    console.log('  checking '+client.url.href);
-		client.post('/hello/' + getHost(me) + '/' + getPort(me), universe, function(err, req, res, u) {
-			for(var key in universe) {
-			    if (key == req._headers.host) {
-				if (err != null) {
+    for (var url in universe)
+	checkUrl(url);
+}
+
+function checkUrl(url) {
+    setTimeout( function(url) {
+	    var client = restify.createJsonClient({
+		    url: 'http://'+url,
+		    version: '*'
+		});
+	    if (verbose)
+		console.log('  checking '+client.url.href);
+	    client.post('/hello/' + getHost(me) + '/' + getPort(me), universe, function(err, req, res, u) {
+		    for(var key in universe) {
+			if (key == req._headers.host) {
+			    if (err != null) {
+				if (!universe[key].down) {
 				    console.log('  removing '+key);
 				    universe[key].down = true;
 				}
-				else {
-				    universe[key].down = false;
-				    universe[key].lastSeen = new Date().getTime();
-				    if (universe[key].firstSeen == -1) {
-					console.log('  adding '+key);
-					universe[key].firstSeen = universe[key].lastSeen;
-				    }
-				    break;
-				}
 			    }
-			    if (err == null) {
-				union(u);
+			    else {
+				universe[key].down = false;
+				universe[key].lastSeen = new Date().getTime();
+				if (universe[key].firstSeen == -1) {
+				    console.log('  adding '+key);
+				    universe[key].firstSeen = universe[key].lastSeen;
+				}
+				break;
 			    }
 			}
-		    });
-	    }, rndInt(2000), url);
-    }
+			if (err == null) {
+			    union(u);
+			}
+		    }
+		});
+	}, rndInt(2000), url);
 }
 
 function stats() {
@@ -100,6 +105,7 @@ function union(u) { // add in whatever peers we don't already know about
 		u[uk].lastSeen = -1;
 		u[uk].down = true;
 		universe[uk] = u[uk]; // add it to our universe
+		checkUrl(uk);
 		if (verbose)
 		    console.log('  potential peer: '+uk);
 	    }
