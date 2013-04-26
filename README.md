@@ -49,14 +49,14 @@ To see what nodes the first process knows about, visit the peer in a browser:
 TODO
 ----
 * support a compute request on a single node
-** accept some code to execute
-** accept some data to work with
-** run the job
-** return the result to the requestor
+ * accept some code to execute
+ * accept some data to work with
+ * run the job
+ * return the result to the requestor
 * enable a single computational request to one of the nodes
-** send the request to all nodes this node knows about
-** wait for all the responses
-** sew up all the results and feed them back to the requestor
+ * send the request to all nodes this node knows about
+ * wait for all the responses
+ * sew up all the results and feed them back to the requestor
 
 Author
 ------
