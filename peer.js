@@ -74,7 +74,7 @@ function checkUrl(url) {
 			}
 		    }
 		});
-	}, rndInt(2000), url);
+	}, rndInt(5000), url); // within the next 5 seconds
 }
 
 function stats() {
@@ -94,17 +94,17 @@ function stats() {
 
 // util functions
 function union(u) { // add in whatever peers we don't already know about
-    for(var uk in u) { // for each element in the given universe
-	if (uk != me) { // if this entry isn't us
+    for(var uk in u) {
+	if (uk != me) {
 	    var found = false;
-	    for(var key in universe) // for each of our known peers
-		if (uk == key) // test to see if we have it
+	    for(var key in universe)
+		if (uk == key)
 		    found = true;
-	    if (!found) { // if we don't already have it
+	    if (!found) {
 		u[uk].firstSeen = -1;
 		u[uk].lastSeen = -1;
 		u[uk].down = true;
-		universe[uk] = u[uk]; // add it to our universe
+		universe[uk] = u[uk];
 		checkUrl(uk);
 		if (verbose)
 		    console.log('  potential peer: '+uk);
@@ -125,17 +125,46 @@ function getPort(s) {
     return(s.split(":")[1]);
 }
 
+function getAge(then) {
+    var now = new Date().getTime();
+    var age = '';
+    var day = 1000*60*60*24;
+    var hour = 1000*60*60;
+    var min = 1000*60;
+    var sec = 1000;
+    if (then > -1) {
+	delta = now - then;
+	days = Math.floor(delta/day);
+	delta = delta % day;
+	hours = Math.floor(delta/hour);
+	delta = delta % hour;
+	mins = Math.floor(delta/min);
+	delta = delta % min;
+	secs = Math.floor(delta/sec);
+	if (days > 0)
+	    age = days+' days, ';
+	if (hours > 0)
+	    age = age+hours+' hours, ';
+	if (mins > 0)
+	    age = age+mins+' minutes, ';
+	age = age+secs+' seconds';
+    }
+    else
+	age = 'never';
+    return(age);
+}
+
 // http routines
 function index(req, res, next) {
     var connections = 0;
     var s = "<html><body><h1>"+me+" disruptor status</h1>";
     for (var key in universe) {
 	if (!universe[key].down) {
-	    s = s+'+ <a href="http://'+key+'">'+key+'</a><br>';
+	    s = s+'+ <a href="http://'+key+'">'+key+'</a> up '+getAge(universe[key].firstSeen)+'<br>';
 	    connections += 1;
 	}
 	else
-	    s = s+'- '+key+'<br>';
+	    s = s+'- '+key+' last seen '+getAge(universe[key].lasttSeen)+' ago<br>';
     }
     s = s+'<br>'+connections+' active connections<br></body></html>';
 
