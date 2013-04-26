@@ -49,8 +49,6 @@ The next step is to enable a computational request to one of the nodes which wil
 it out to all the nodes it knows are alive. That node, acting as master, will collect all
 the results and feed them back to the requestor.
 
-I am currently working on the design for this. Please get in touch if you would like to contribute.
-
 Author
 ------
 **Anders Brownworth**
@@ -58,6 +56,8 @@ Author
 + [http://twitter.com/anders94](http://twitter.com/anders94)
 + [http://github.com/anders94](http://github.com/anders94)
 + [http://anders.com/](http://anders.com)
+
+Please get in touch if you would like to contribute.
 
 Copyright and license
 ---------------------
