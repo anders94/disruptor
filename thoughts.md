@@ -10,11 +10,12 @@ vm
   + sandboxed from our local variables
   + in process - no thread startup / requirement for waiting thread strategy
   + we can catch errors using 'domains' without bailing on the master process
-  - basic javascript - no nodeisms - require is not defined. (can this be passed?)
+  - only basic javascript - no nodeisms - require is not defined. (can this be passed?)
 
-separate node process
+child process
   + all the power of node
-  - security - might be easy to coerce the app into running arbitrary code
+  - security issue - might be easy to coerce the app into running arbitrary code
+  - need to run apps from the filesystem, not from strings
 
 general thoughts
 ----------------
