@@ -27,17 +27,17 @@ The application takes an IP and port on which to listen and the IP and port of s
 on the network. All the peers will find eachother and stay in communication as peers enter and
 leave the network.
 
-    node disruptor myHost:myPort anotherHost:anotherPort
+    node disruptor peer myHost:myPort anotherHost:anotherPort
 
 Example
 -------
 In the first shell:
 
-    node disruptor 127.0.0.1:1111 127.0.0.1:22222
+    node disruptor peer 127.0.0.1:1111 127.0.0.1:22222
 
 In the second shell:
 
-    node disruptor 127.0.0.1:2222 127.0.0.1:11111
+    node disruptor peer 127.0.0.1:2222 127.0.0.1:11111
 
 The processes should find eachother. Start a few more and point each to one of the live nodes in 
 the network and they should all find eachother.
