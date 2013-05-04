@@ -1,4 +1,4 @@
-worker code execution strategy
+Worker Code Execution Strategy
 ------------------------------
 Pluses and minuses on different strategies for executing arbitrary javascript:
 
@@ -22,19 +22,21 @@ child process
   * workers implement process.on('message', function(m) { ... and do a 
     process.send({ foo: 'bar' }); to return data to the server
 
-general thoughts
-----------------
-In the exec and vm contexts, code has no filename so sha1 the content and use that as 
-the name / handle?
+In the exec and vm contexts, code has no filename so we should sha1 digest the content 
+and use that as the name / handle.
 
-Workers, oncce started, should always be running. They are sent data at arbitrary times 
+Workers, once started, should always be running. They are sent data at arbitrary times 
 and return results in a similarly arbitrary way. This means we need a strategy for 
 worker management - setup / teardown.
 
-There needs to be a worker startup / shutdown process which works independantly from 
+There needs to be a worker startup / shutdown process which works independently from 
 passing work to the workers and getting resuts back. Workers may be started on all nodes 
 or a target number of nodes. A chunk of work can be sent to all workers or a single worker
 via some distribution policy. (round robin, weighted, least connections, etc.) Should 
 collating of the data coming back be the responsibility of some user code sent to the
-controlling peer or just the responsibility of the requestor? (for simplicity and my 
-specific needs, I think it should be the responsibility of the requestor)
+controlling peer or just the responsibility of the requestor?
+
+In the streaming context I want to send work to the least loaded peer so I will probably
+optimize for that first. Get in touch with @anders94 if you have a need for sending the
+same job to all or a set of peers. Until I get distributed dataset support, I don't know 
+that this will be very useful but get in touch if you have a specific need.
