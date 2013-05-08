@@ -6,4 +6,6 @@ n.on('message', function(m) {
 	console.log('PARENT got message:', m);
     });
 
-n.send({ hello: 'world' });
+setInterval( function() {
+	n.send({ hello: 'world' });
+    }, 1234);

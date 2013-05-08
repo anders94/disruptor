@@ -2,4 +2,6 @@ process.on('message', function(m) {
 	console.log('CHILD got message:', m);
     });
 
-process.send({ foo: 'bar' });
+setInterval( function() {
+	process.send({ foo: 'bar' });
+    }, 1000);
