@@ -48,7 +48,7 @@ To see what other nodes the first disruptor peer knows about, visit it with a we
 
 Creating Worker Apps
 --------------------
-Workers run code that lives in app directories under data/ (for example data/wordcount) and 
+Workers run code that lives in app directories under apps/ (for example apps/wordcount) and 
 respond to:
 
 ```javascript
@@ -83,12 +83,12 @@ process.on('message', function(m) {
     });
 ```
 
-Input:
+This input:
 ```
-"The First World War was to be the war to end all wars."
+The First World War was to be the war to end all wars.
 ```
 
-Output:
+creates this output:
 ```
 { message: 'The First World War was to be the war to end all wars.',
     total: 13,
@@ -98,9 +98,11 @@ Output:
 Worker apps, once started, run continuously and can send responses at any time. Any number
 of differently named workers can run on the same node at the same time.
 
-Any npm packages used in worker apps needs to be installed on every node. If packages are 
-installed locally to the app (ie: data/wordcount/npm_modules as in the above example) they 
-will be automatically packeged up with the worker app and distributed to the worker nodes.
+**Note:** Any npm packages used in worker apps need to be installed on every node. Disruptor
+will do this automatically if you install the modules locally to each app (ie: 
+apps/wordcount/npm_modules for the above example) although a standard 'npm install' will put 
+them in disruptor's npm_modules. This will work but the code will not be automatically 
+distributed to other nodes so you would have to do that by hand.
 
 **Note: This functionality is under active developed.**
 
