@@ -103,7 +103,7 @@ For example, if you were to send the above wordcount app the following payload:
 
 the result would look like this:
 
-```json
+```
 {
   message: 'The First World War was to be the war to end all wars.',
     total: 13,
