@@ -51,31 +51,37 @@ Creating Worker Apps
 Workers run code that lives in app directories under data/ (for example data/wordcount) and 
 respond to:
 
-    process.on('message', function() { ... }) 
+```javascript
+process.on('message', function() { ... }) 
+```
 
 They emit results with:
 
-    process.send( ... );
+```javascript
+process.send( ... );
+```
 
 For example, here is a word counting worker:
 
-    var natural = require('natural'),
-        tokenizer = new natural.WordTokenizer();
-    
-    process.on('message', function(m) {
-            var total = 0, unique = 0;
-            var hash = {};
-            var ary = tokenizer.tokenize(m);
-            for (var id in ary) { // throw stemmed word into hash
-                hash[natural.PorterStemmer.stem(ary[id])] = true;
-                total ++;
-            }
-    
-            for (var key in hash) // count unique word stems
-                unique ++;
-    
-            process.send({ message: m, total: total, unique: unique });
-        });
+```javascript
+var natural = require('natural'),
+    tokenizer = new natural.WordTokenizer();
+
+process.on('message', function(m) {
+        var total = 0, unique = 0;
+        var hash = {};
+        var ary = tokenizer.tokenize(m);
+        for (var id in ary) { // throw stemmed word into hash
+            hash[natural.PorterStemmer.stem(ary[id])] = true;
+            total ++;
+        }
+
+        for (var key in hash) // count unique word stems
+            unique ++;
+
+        process.send({ message: m, total: total, unique: unique });
+    });
+```
 
 Worker apps, once started, run continuously and can send responses at any time. Any number
 of differently named workers can run on the same node at the same time.
@@ -97,11 +103,13 @@ For example, if you were to send the above wordcount app the following payload:
 
 the result would look like this:
 
-    {
-      message: 'The First World War was to be the war to end all wars.',
-      total: 13,
-      unique: 9
-    }
+```json
+{
+  message: 'The First World War was to be the war to end all wars.',
+    total: 13,
+   unique: 9
+}
+```
 
 **Note: This functionality is under active developed.**
 
