@@ -46,17 +46,50 @@ To see what other nodes the first disruptor peer knows about, visit it with a we
 
     http://127.0.0.1:1111
 
-TODO
-----
-* support a compute request on a single node
- * accept some code to execute
- * accept some data to work with
- * run the job
- * return the result to the requestor
-* enable a single computational request to one of the nodes
- * send the request to all nodes this node knows about
- * wait for all the responses
- * sew up all the results and feed them back to the requestor
+Creating Worker Apps
+--------------------
+Workers run code that live in app directories under data/ (for example data/wordcount) and 
+respond to:
+    process.on('message', function() { ... }) 
+
+They emit results with:
+    process.send( ... );
+
+For example, here is a simple word counting compute job:
+
+    var natural = require('natural'),
+        tokenizer = new natural.WordTokenizer();
+    
+    process.on('message', function(m) {
+            var total = 0, unique = 0;
+            var hash = {};
+            var ary = tokenizer.tokenize(m);
+            for (var id in ary) { // throw stemmed word into hash
+                hash[natural.PorterStemmer.stem(ary[id])] = true;
+                total ++;
+            }
+    
+            for (var key in hash) // count unique word stems
+                unique ++;
+    
+            process.send({ message: m, total: total, unique: unique });
+        });
+
+Worker apps, once started, run continuously and can send responses at any time. Any number
+of differently named workers can run on the same node at the same time.
+
+Any npm packages used in worker apps needs to be installed on every node. If packages are 
+installed locally to the app (ie: data/wordcount/npm_modules in the above example) they will 
+be automatically packeged up with the worker app and distributed to the worker nodes.
+
+**Note: This functionality is actively being developed.**
+
+Sending Compute Tasks to Workers
+--------------------------------
+You can send json payloads to be processed to any node in the cluster through an HTTP socket
+connection. The task will be sent to a random worker and responses will flow back the same way.
+
+**Note: This functionality is actively being developed.**
 
 Author
 ------

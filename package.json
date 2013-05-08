@@ -12,7 +12,8 @@
       "util": ">= 0.4.9",
       "node-uuid": ">= 1.4.0",
       "crypto": ">= 0.0.3",
-      "restify": ">= 2.4.1"
+      "restify": ">= 2.4.1",
+      "natural": ">= 0.1.21"
     }
   , "main": "lib/index"
   , "engines": { "node": ">= 0.8.0" }
