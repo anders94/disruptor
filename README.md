@@ -48,7 +48,7 @@ To see what other nodes the first disruptor peer knows about, visit it with a we
 
 Creating Worker Apps
 --------------------
-Workers run code that live in app directories under data/ (for example data/wordcount) and 
+Workers run code that lives in app directories under data/ (for example data/wordcount) and 
 respond to:
 
     process.on('message', function() { ... }) 
@@ -90,6 +90,18 @@ Sending Compute Tasks to Workers
 --------------------------------
 You can send json payloads to be processed to any node in the cluster through an HTTP socket
 connection. The task will be sent to a random worker and responses will flow back the same way.
+
+For example, if you were to send the above wordcount app the following payload:
+
+    'The First World War was to be the war to end all wars.'
+
+the result would look like this:
+
+    {
+      message: 'The First World War was to be the war to end all wars.',
+      total: 13,
+      unique: 9
+    }
 
 **Note: This functionality is actively being developed.**
 
