@@ -83,6 +83,18 @@ process.on('message', function(m) {
     });
 ```
 
+Input:
+```
+"The First World War was to be the war to end all wars."
+```
+
+Output:
+```
+{ message: 'The First World War was to be the war to end all wars.',
+    total: 13,
+   unique: 9 }
+```
+
 Worker apps, once started, run continuously and can send responses at any time. Any number
 of differently named workers can run on the same node at the same time.
 
@@ -96,20 +108,6 @@ Sending Compute Tasks to Workers
 --------------------------------
 You can send json payloads to be processed to any node in the cluster through an HTTP socket
 connection. The task will be sent to a random worker and responses will flow back the same way.
-
-For example, if you were to send the above wordcount app the following payload:
-
-    'The First World War was to be the war to end all wars.'
-
-the result would look like this:
-
-```
-{
-  message: 'The First World War was to be the war to end all wars.',
-    total: 13,
-   unique: 9
-}
-```
 
 **Note: This functionality is under active developed.**
 
