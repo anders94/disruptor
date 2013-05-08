@@ -50,9 +50,11 @@ Creating Worker Apps
 --------------------
 Workers run code that live in app directories under data/ (for example data/wordcount) and 
 respond to:
+
     process.on('message', function() { ... }) 
 
 They emit results with:
+
     process.send( ... );
 
 For example, here is a simple word counting compute job:
