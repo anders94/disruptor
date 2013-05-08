@@ -67,10 +67,10 @@ For example, here is a word counting worker:
 var natural = require('natural'),
     tokenizer = new natural.WordTokenizer();
 
-process.on('message', function(m) {
+process.on('message', function(message) {
         var total = 0, unique = 0;
         var hash = {};
-        var ary = tokenizer.tokenize(m);
+        var ary = tokenizer.tokenize(message);
         for (var id in ary) { // throw stemmed word into hash
             hash[natural.PorterStemmer.stem(ary[id])] = true;
             total ++;
@@ -79,11 +79,11 @@ process.on('message', function(m) {
         for (var key in hash) // count unique word stems
             unique ++;
 
-        process.send({ message: m, total: total, unique: unique });
+        process.send({ message: message, total: total, unique: unique });
     });
 ```
 
-This input:
+With this example, this input:
 ```
 The First World War was to be the war to end all wars.
 ```
