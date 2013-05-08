@@ -57,7 +57,7 @@ They emit results with:
 
     process.send( ... );
 
-For example, here is a simple word counting compute job:
+For example, here is a word counting worker:
 
     var natural = require('natural'),
         tokenizer = new natural.WordTokenizer();
@@ -81,10 +81,10 @@ Worker apps, once started, run continuously and can send responses at any time. 
 of differently named workers can run on the same node at the same time.
 
 Any npm packages used in worker apps needs to be installed on every node. If packages are 
-installed locally to the app (ie: data/wordcount/npm_modules in the above example) they will 
-be automatically packeged up with the worker app and distributed to the worker nodes.
+installed locally to the app (ie: data/wordcount/npm_modules as in the above example) they 
+will be automatically packeged up with the worker app and distributed to the worker nodes.
 
-**Note: This functionality is actively being developed.**
+**Note: This functionality is under active developed.**
 
 Sending Compute Tasks to Workers
 --------------------------------
@@ -103,7 +103,7 @@ the result would look like this:
       unique: 9
     }
 
-**Note: This functionality is actively being developed.**
+**Note: This functionality is under active developed.**
 
 Author
 ------
