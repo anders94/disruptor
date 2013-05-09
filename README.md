@@ -106,6 +106,23 @@ distributed to other nodes so you would have to do that by hand.
 
 **Note: This functionality is under active developed.**
 
+Starting Workers
+----------------
+You start workers by telling one of the nodes to tell all the peers it knows about to start
+a particular application.
+
+``
+node disruptor start 127.0.0.1:1111 apps/wordcount/counter
+```
+
+Stopping all the workers is done similarly.
+
+``
+node disruptor stop 127.0.0.1:1111 apps/wordcount/counter
+```
+
+**Note: This functionality is under active developed.**
+
 Sending Compute Tasks to Workers
 --------------------------------
 You can send json payloads to be processed to any node in the cluster through an HTTP socket
