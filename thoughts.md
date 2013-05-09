@@ -1,3 +1,11 @@
+Node.js as the Lowest Common Denominator
+----------------------------------------
+Node.js is great for I/O bound tasks. (and not quite as good for things that are CPU bound)
+Most needs for realtime processing are around parallelizing I/O - tasks like breaking big 
+data sets into little peices across many machines and processing them in parallel. Disruptor
+intends to coordinate the distribution of realtime tasks amongst many peers using the 
+node.js virtual machine as the common building block.
+
 Worker Code Execution Strategy
 ------------------------------
 Pluses and minuses on different strategies for executing arbitrary javascript:
