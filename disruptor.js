@@ -5,44 +5,20 @@ var util = require('util'),
 
 var verbose = false;
 
-if (process.argv.length>4 && process.argv[2] == 'peer') {
+if (process.argv.length==5 && process.argv[2] == 'peer')
     peer.createPeer(process.argv[3], process.argv[4]);
 
-}
-else if (process.argv.length>3 && process.argv[2] == 'status') {
-    var url = process.argv[3];
-    client = restify.createClient({
-	    url: 'http://'+url
-	});
+else if (process.argv.length==5 && process.argv[2] == 'start')
+    peer.masterStart(process.argv[3], process.argv[4]);
+//peer.startVMs(__dirname + '/' + process.argv[3]);
 
-    client.get('/', function(err, req) {
-	    var body = '';
-	    if (err != null)
-		console.log(err);
-	    else {
-		req.on('result', function(err, res) {
-			if (err != null)
-			    console.log(err); // HTTP status code >= 400
-			else {
-			    res.body = '';
-			    res.setEncoding('utf8');
-			    res.on('data', function(chunk) {
-				    res.body += chunk;
-				});
+else if (process.argv.length==5 && process.argv[2] == 'stop')
+    peer.masterStop(process.argv[3], process.argv[4]);
 
-			    res.on('end', function() {
-				    console.log(body);
-				});
-			}
-		    });
-	    }
-	});
-}
 else {
-    console.log('Usage: '+process.argv[0]+' '+path.basename(process.argv[1])+' peer localIP:localPort remoteIP:remotePort');
-    console.log('  or   '+process.argv[0]+' '+path.basename(process.argv[1])+' status IP:port');
-    //console.log('  or   '+process.argv[0]+' '+process.argv[1]+' start IP:port dir/');
-    //console.log('  or   '+process.argv[0]+' '+process.argv[1]+' stop IP:port dir/');
-    //console.log('  or   '+process.argv[0]+' '+process.argv[1]+' run IP:port dir/app');
-    //console.log('  or   '+process.argv[0]+' '+process.argv[1]+' send IP:port dir/app data');
+    var appname = path.basename(process.argv[1]);
+    console.log('Usage: '+process.argv[0]+' '+appname+' peer localIP:localPort remoteIP:remotePort');
+    console.log('  or   '+process.argv[0]+' '+appname+' start IP:port apps/dir/app');
+    console.log('  or   '+process.argv[0]+' '+appname+' stop IP:port apps/dir/app');
+    //console.log('  or   '+process.argv[0]+' '+appname+' send IP:port apps/dir/app data');
 }
