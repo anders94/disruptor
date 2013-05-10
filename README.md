@@ -117,6 +117,14 @@ Stopping all the workers is done similarly.
 
     node disruptor stop 127.0.0.1:1111 apps/wordcount/counter
 
+**Note:** Code is not yet distributed automatically. You have to sync the app directory with
+all the peers. A good command to use for this is rsync:
+
+    rsyns -ae ssh ~/disruptor/apps 1.2.3.4:~/disruptor
+
+In the future, starting a job will first make sure it runs locally, package it up into a 
+compressed archive, distribute it and then start it on all known peers.
+
 **Note: This functionality is under active developed.**
 
 Sending Compute Tasks to Workers
