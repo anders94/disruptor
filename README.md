@@ -6,12 +6,16 @@ disruptor
 <img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
 
 **disruptor** intends to be a distributed P2P fault-tolerant real-time computation platform written in 
-node.js. It has minimal configuration requirements and no single point of failure. Nodes are started 
-by being pointed at another peer and they quickly find all the other nodes in the network. JavaScript
-compute jobs and json data payloads can be sent to one of the nodes in the network which will distribute
-it amongst all the other live nodes. Results are then collated and returned to the requestor. There 
-is no master peer, monitoring node or other single point of failure in the system and the design 
-stresses simplicity at every turn.
+node.js. It has minimal configuration requirements and no single point of failure.
+
+Nodes are started by being pointed at another peer and they quickly find all the other nodes in the 
+network. Workers are written in Javascript as independant node.js applications which get spawned by 
+each node in the cluster. As work in the form of json payloads over http requests comes in, it gets 
+distributed amongst the live workers. Results come back via json payloads as responses to the http 
+requests.
+
+There is no master peer, monitoring node or other single point of failure in the system and the design 
+stresses simplicity wherever possible and requires a minimum of setup.
 
 Install
 -----
@@ -24,7 +28,7 @@ or
 Usage
 -----
 The application takes an IP and port on which to listen and the IP and port of some other peer 
-on the network. All the peers will find eachother and stay in communication as peers enter and
+on the network. All the peers will find each other and stay in communication as peers enter and
 leave the network.
 
     node disruptor peer myHost:myPort anotherHost:anotherPort
@@ -39,8 +43,8 @@ In the second shell:
 
     node disruptor peer 127.0.0.1:2222 127.0.0.1:11111
 
-The processes should find eachother. Start a few more and point each to one of the live nodes in 
-the network and they should all find eachother.
+The processes should find each other. Start a few more and point each to one of the live nodes in 
+the network and they should all find each other.
 
 To see what other nodes the first disruptor peer knows about, visit it with a web browser:
 
