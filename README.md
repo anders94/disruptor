@@ -14,8 +14,8 @@ each node in the cluster. As work in the form of json payloads over http request
 distributed amongst the live workers. Results come back via json payloads as responses to the http 
 requests.
 
-There is no master peer, monitoring node or other single point of failure in the system and the design 
-stresses simplicity wherever possible and requires a minimum of setup.
+There is no master peer, monitoring node or other single point of failure. The design stresses 
+simplicity wherever possible and requires a minimum of setup.
 
 Install
 -----
