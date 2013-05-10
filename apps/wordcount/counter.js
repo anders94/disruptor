@@ -17,3 +17,5 @@ process.on('message', function(m) {
 
         process.send({ message: m, total: total, unique: unique });
     });
+
+console.log('wordcount started');
