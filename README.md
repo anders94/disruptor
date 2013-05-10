@@ -46,6 +46,9 @@ To see what other nodes the first disruptor peer knows about, visit it with a we
 
     http://127.0.0.1:1111
 
+Usually this is done machine to machine with network accessible IP addresses, not all on the same 
+host as in this example.
+
 Creating Worker Apps
 --------------------
 Workers run code that lives in app directories under apps/ (for example apps/wordcount) and 
@@ -99,10 +102,10 @@ Worker apps, once started, run continuously and can send responses at any time. 
 of differently named workers can run on the same node at the same time.
 
 **Note:** Any npm packages used in worker apps need to be installed on every node. Disruptor
-will do this automatically if you install the modules locally to each app (ie: 
+will do this automatically* if you install the modules locally to each app (ie: 
 apps/wordcount/npm_modules for the above example) although a standard 'npm install' will put 
 them in disruptor's npm_modules. This will work but the code will not be automatically 
-distributed to other nodes so you would have to do that by hand.
+distributed to other nodes by disruptor so you would have to do that by hand.
 
 **Note: This functionality is under active developed.**
 
@@ -120,7 +123,7 @@ Stopping all the workers is done similarly.
 **Note:** Code is not yet distributed automatically. You have to sync the app directory with
 all the peers. A good command to use for this is rsync:
 
-    rsyns -ae ssh ~/disruptor/apps 1.2.3.4:~/disruptor
+    rsync -ae ssh ~/disruptor/apps 1.2.3.4:~/disruptor
 
 In the future, starting a job will first make sure it runs locally, package it up into a 
 compressed archive, distribute it and then start it on all known peers.
@@ -138,11 +141,17 @@ Author
 ------
 **Anders Brownworth**
 
-+ [http://twitter.com/anders94](http://twitter.com/anders94)
-+ [http://github.com/anders94](http://github.com/anders94)
-+ [http://anders.com/](http://anders.com)
++ [http://twitter.com/anders94](@anders94)
++ [http://github.com/anders94](github.com/anders94)
++ [http://anders.com/](anders.com)
 
 Please get in touch if you would like to contribute.
+
+Are You Using This?
+-------------------
+Please let me know if you are using disruptor. I'm very interested in solving real-world problems with it so 
+it is useful to know what jobs it is or isn't solving. Please tweet [http://twitter.com/anders94](@anders94)
+and let me know.
 
 Copyright and license
 ---------------------
@@ -151,7 +160,7 @@ Copyright 2013 Anders Brownworth
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except 
 in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
-  [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+  [http://www.apache.org/licenses/LICENSE-2.0](apache.org/licenses/LICENSE-2.0)
 
 Unless required by applicable law or agreed to in writing, software distributed under the 
 License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either 
