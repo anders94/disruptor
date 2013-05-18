@@ -1,12 +1,11 @@
 disruptor
 =========
 
-***Warning: This is alpha code.*** Things are in the design stage so they may change without notice.
-
 <img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
 
-**disruptor** intends to be a distributed P2P fault-tolerant real-time computation platform written in 
-node.js. It has minimal configuration requirements and no single point of failure.
+**disruptor** intends to be a distributed realtime computation system for node.js. disruptor makes it
+easy to process unbounded streams of data across many machines. It has minimal configuration requirements 
+and no single point of failure. It is still under early development.
 
 Nodes are started by being pointed at another peer and they quickly find all the other nodes in the 
 network. Workers are written in Javascript as independant node.js applications which get spawned by 
