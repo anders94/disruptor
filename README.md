@@ -153,8 +153,8 @@ Please get in touch if you would like to contribute.
 Are You Using This?
 -------------------
 I started this project to do distributed natural language processing and machine learning. However,
-I'm sure the need to massively distribute node.js processing exists for many people. I'm interested
-in solving real-world problems with it so it is useful to know what jobs it is or isn't solving. 
+I'm sure the need to massively distribute node.js processing exists for many other jobs. I'm interested
+in solving real-world problems with disruptor so it is useful to know what jobs it is or isn't solving. 
 Please tweet [http://twitter.com/anders94](@anders94) or otherwise get in touch.
 
 Copyright and license
