@@ -152,9 +152,10 @@ Please get in touch if you would like to contribute.
 
 Are You Using This?
 -------------------
-Please let me know if you are using disruptor. I'm very interested in solving real-world problems with it so 
-it is useful to know what jobs it is or isn't solving. Please tweet [http://twitter.com/anders94](@anders94)
-and let me know.
+I started this project to do distributed natural language processing and machine learning. However,
+I'm sure the need to massively distribute node.js processing exists for many people. I'm interested
+in solving real-world problems with it so it is useful to know what jobs it is or isn't solving. 
+Please tweet [http://twitter.com/anders94](@anders94) or otherwise get in touch.
 
 Copyright and license
 ---------------------
