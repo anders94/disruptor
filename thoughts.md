@@ -33,9 +33,10 @@ child process
 In the exec and vm contexts, code has no filename so we should sha1 digest the content 
 and use that as the name / handle.
 
-Workers, once started, should always be running. They are sent data at arbitrary times 
-and return results in a similarly arbitrary way. This means we need a strategy for 
-worker management - setup / teardown.
+Workers, once started, should always be running so we don't have to pay the performance
+penalty of starting the vm every time a block of work needs to be done. Workers are sent 
+data at arbitrary times and return results in a similarly arbitrary way. This means we 
+need a strategy for worker management - setup / teardown.
 
 There needs to be a worker startup / shutdown process which works independently from 
 passing work to the workers and getting resuts back. Workers may be started on all nodes 
