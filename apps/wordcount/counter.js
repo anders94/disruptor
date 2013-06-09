@@ -1,6 +1,8 @@
 var natural = require('natural'),
     tokenizer = new natural.WordTokenizer();
 
+var debug = false; // prints the time once a second so you can see when this is running
+
 process.on('message', function(m) {
         //console.log('child process: counting "' + m + '"');
 	var total = 0, unique = 0;
@@ -19,3 +21,8 @@ process.on('message', function(m) {
     });
 
 console.log('wordcount started');
+
+if (debug)
+    setInterval( function() {
+	    console.log('wordcount running '+Date.now());
+	}, 1000);
