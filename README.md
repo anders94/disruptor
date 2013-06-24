@@ -124,7 +124,7 @@ Stopping all the workers is done similarly.
     node disruptor stop 127.0.0.1:1111 apps/wordcount/counter
 
 **Note:** Code is not yet distributed automatically. You have to sync the app directory with
-all the peers. A good command to use for this is rsync:
+all the peers. A good command to use for this is rsync for the time being:
 
     rsync -ae ssh ~/disruptor/apps 1.2.3.4:~/disruptor
 
@@ -138,7 +138,21 @@ Sending Compute Tasks to Workers
 You can send json payloads to be processed to any node in the cluster through an HTTP socket
 connection. The task will be sent to a random worker and responses will flow back the same way.
 
-**Note: This functionality is under active developed.**
+    node disruptor send 127.0.0.1:1111 apps/wordcount/counter \
+    "{'the quick brown fox jumped over the lazy dog'}"
+
+Alternatively, you can send requests directly via HTTP:
+
+    $ curl -X POST -H "content-type: application/json" \
+        http://localhost:8098/mapred --data @-<<\EOF
+    {'the quick brown fox jumped over the lazy dog'}
+    EOF
+
+JSON results come back as expected.
+
+    {total: 9, unique: 8}
+
+**Note: This functionality is under active development.**
 
 Author
 ------
