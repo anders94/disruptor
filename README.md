@@ -150,7 +150,9 @@ Alternatively, you can send requests directly via HTTP:
 
 JSON results come back as expected.
 
-    {total: 9, unique: 8}
+    { message: 'the quick brown fox jumped over the lazy dog',
+        total: 9,
+       unique: 8 }
 
 **Note: This functionality is under active development.**
 
