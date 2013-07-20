@@ -17,8 +17,8 @@ else if (process.argv.length==5 && process.argv[2] == 'stop')
 
 else {
     var appname = path.basename(process.argv[1]);
-    console.log('Usage: '+process.argv[0]+' '+appname+' peer localIP:localPort remoteIP:remotePort');
-    console.log('  or   '+process.argv[0]+' '+appname+' start IP:port apps/dir/app');
-    console.log('  or   '+process.argv[0]+' '+appname+' stop IP:port apps/dir/app');
-    //console.log('  or   '+process.argv[0]+' '+appname+' send IP:port apps/dir/app data');
+    console.log('Usage: '+appname+' peer localIP:localPort remoteIP:remotePort');
+    console.log('  or   '+appname+' start IP:port apps/dir/app');
+    console.log('  or   '+appname+' stop IP:port apps/dir/app');
+    console.log('  or   '+appname+' send IP:port apps/dir/app data');
 }

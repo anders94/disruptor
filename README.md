@@ -18,11 +18,12 @@ simplicity wherever possible and requires a minimum of setup.
 
 Install
 -----
-    git clone https://github.com/anders94/disruptor.git
+    npm install -g disruptor
 
 or
 
-    npm install disruptor
+    git clone https://github.com/anders94/disruptor.git
+    npm install
 
 Usage
 -----
@@ -30,17 +31,17 @@ The application takes an IP and port on which to listen and the IP and port of s
 on the network. All the peers will find each other and stay in communication as peers enter and
 leave the network.
 
-    node disruptor peer myHost:myPort anotherHost:anotherPort
+    disruptor peer myHost:myPort anotherHost:anotherPort
 
 Example
 -------
 In the first shell:
 
-    node disruptor peer 127.0.0.1:1111 127.0.0.1:22222
+    disruptor peer 127.0.0.1:1111 127.0.0.1:22222
 
 In the second shell:
 
-    node disruptor peer 127.0.0.1:2222 127.0.0.1:11111
+    disruptor peer 127.0.0.1:2222 127.0.0.1:11111
 
 The processes should find each other. Start a few more and point each to one of the live nodes in 
 the network and they should all find each other.
@@ -117,11 +118,11 @@ Starting Workers
 You start workers by telling one of the nodes to tell all the peers it knows about to start
 a particular application.
 
-    node disruptor start 127.0.0.1:1111 apps/wordcount/counter
+    disruptor start 127.0.0.1:1111 apps/wordcount/counter
 
 Stopping all the workers is done similarly.
 
-    node disruptor stop 127.0.0.1:1111 apps/wordcount/counter
+    disruptor stop 127.0.0.1:1111 apps/wordcount/counter
 
 **Note:** Code is not yet distributed automatically. You have to sync the app directory with
 all the peers. A good command to use for this is rsync for the time being:
@@ -138,7 +139,7 @@ Sending Compute Tasks to Workers
 You can send json payloads to be processed to any node in the cluster through an HTTP socket
 connection. The task will be sent to a random worker and responses will flow back the same way.
 
-    node disruptor send 127.0.0.1:1111 apps/wordcount/counter \
+    disruptor send 127.0.0.1:1111 apps/wordcount/counter \
     "{'the quick brown fox jumped over the lazy dog'}"
 
 Alternatively, you can send requests directly via HTTP:

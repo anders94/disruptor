@@ -1,12 +1,15 @@
 {
     "name": "disruptor"
-  , "version": "0.0.3"
+  , "version": "0.0.4"
   , "description": "Distributed real-time computation system."
   , "homepage": "https://github.com/anders94/disruptor"
   , "author": "Anders Brownworth <andersbrownworth@gmail.com>"
   , "repository":{
         "type": "git"
       , "url": "https://github.com/anders94/disruptor.git"
+    }
+  , "bin": {
+        "disruptor": "./bin/disruptor"
     }
   , "dependencies": {
       "util": ">= 0.4.9",
