@@ -11,6 +11,7 @@ Worker Code Execution Strategy
 Pluses and minuses on different strategies for executing arbitrary javascript:
 
 exec
+  * security! - random uncontrolled code execution
   * in process - no thread startup / requirement for waiting thread strategy
   * can overwrite our local variables - very dangerous
 
@@ -21,8 +22,8 @@ vm
   * only basic javascript - no nodeisms - ex: require is not defined. (can this be passed?)
 
 child process
+  * security! - arbitrary code execution risk
   * all the power of node / npm packages, etc
-  * security issue - might be possible to coerce the app into running arbitrary code
   * need to run apps from the filesystem, not from strings
   * need a way to package up the code, send it to the peers and unpackage it
     * code bundle is a compressed blob of a standard node app including node_modules
