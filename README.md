@@ -26,7 +26,7 @@ Install
 or
 
     git clone https://github.com/anders94/disruptor.git
-
+    cd disruptor/
     npm install
 
 Usage
