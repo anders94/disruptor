@@ -5,8 +5,7 @@ disruptor
 
 **Disruptor** is a distributed realtime computation system for node.js. Disruptor makes it
 easy to process unbounded streams of data across a mesh of many machines. It has minimal 
-configuration requirements and no single points of failure. **Note:** This is still under 
-development.
+configuration requirements and no single points of failure.
 
 Peers are started given the address and port of another peer. They quickly find all the other peers 
 in the mesh without additional configuration. Worker programs are written in Javascript as 
@@ -17,7 +16,7 @@ Results come back as responses to the http requests via json payloads.
 There is no master peer, monitoring peer or other single point of failure. The design stresses 
 simplicity wherever possible and requires minimal setup.
 
-***Note:** Some things, such as the automatic packaging and distribution of client applications, 
+**Note:** Some things, such as the automatic packaging and distribution of client applications, 
 are not yet implemented. This is a work in progress and any help is appriciated.
 
 Install
