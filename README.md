@@ -31,15 +31,15 @@ or
 
 Usage
 -----
-Disruptor takes an IP and port on which to listen and the IP and port of some other peer on the 
-network. All the peers will find each other and stay in communication as peers enter and leave 
-the network.
+Disruptor takes an IP and port on which to listen and the IP and port of some other peer in the 
+mesh. All the peers will find each other and stay in communication as peers enter and leave 
+the mesh.
 
     disruptor peer myHost:myPort anotherHost:itsPort
 
 Example
 -------
-You can simulate a mesh network of nodes running on a single host. In a shell:
+You can simulate a mesh of peers running on a single host. In a shell:
 
     disruptor peer 127.0.0.1:1111 127.0.0.1:22222
 
