@@ -4,8 +4,9 @@ disruptor
 <img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
 
 **Disruptor** is a distributed realtime computation system for node.js. Disruptor makes it
-easy to process unbounded streams of data across many machines. It has minimal configuration 
-requirements and no single points of failure. **Note:** This is still under development.
+easy to process unbounded streams of data across a mesh of many machines. It has minimal 
+configuration requirements and no single points of failure. **Note:** This is still under 
+development.
 
 Peers are started given the address and port of another peer. They quickly find all the other peers 
 in the mesh without additional configuration. Worker programs are written in Javascript as 
