@@ -3,18 +3,21 @@ disruptor
 
 <img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
 
-**disruptor** intends to be a distributed realtime computation system for node.js. disruptor makes it
-easy to process unbounded streams of data across many machines. It has minimal configuration requirements 
-and no single point of failure. It is still under early development.
+**Disruptor** is a distributed realtime computation system for node.js. Disruptor makes it
+easy to process unbounded streams of data across many machines. It has minimal configuration 
+requirements and no single points of failure. **Note:** This is still under development.
 
-Nodes are started by being pointed at another peer and they quickly find all the other nodes in the 
-network. Workers are written in Javascript as independant node.js applications which get spawned by 
-each node in the cluster. As work in the form of json payloads over http requests comes in, it gets 
-distributed amongst the live workers. Results come back via json payloads as responses to the http 
-requests.
+Peers are started given the address and port of another peer. They quickly find all the other peers 
+in the mesh without additional configuration. Worker programs are written in Javascript as 
+independant node.js applications which get spawned by each peer in the cluster. As work comes in, 
+(json payloads over http requests) it gets distributed and processed amongst the live workers. 
+Results come back as responses to the http requests via json payloads.
 
-There is no master peer, monitoring node or other single point of failure. The design stresses 
-simplicity wherever possible and requires a minimum of setup.
+There is no master peer, monitoring peer or other single point of failure. The design stresses 
+simplicity wherever possible and requires minimal setup.
+
+***Note:** Some things, such as the automatic packaging and distribution of client applications, 
+are not yet implemented. This is a work in progress and any help is appriciated.
 
 Install
 -----
@@ -23,35 +26,36 @@ Install
 or
 
     git clone https://github.com/anders94/disruptor.git
+
     npm install
 
 Usage
 -----
-The application takes an IP and port on which to listen and the IP and port of some other peer 
-on the network. All the peers will find each other and stay in communication as peers enter and
-leave the network.
+Disruptor takes an IP and port on which to listen and the IP and port of some other peer on the 
+network. All the peers will find each other and stay in communication as peers enter and leave 
+the network.
 
-    disruptor peer myHost:myPort anotherHost:anotherPort
+    disruptor peer myHost:myPort anotherHost:itsPort
 
 Example
 -------
-In the first shell:
+You can simulate a mesh network of nodes running on a single host. In a shell:
 
     disruptor peer 127.0.0.1:1111 127.0.0.1:22222
 
-In the second shell:
+In another shell:
 
     disruptor peer 127.0.0.1:2222 127.0.0.1:11111
 
 The processes should find each other. Start a few more and point each to one of the live nodes in 
-the network and they should all find each other.
+the network and they should all find all the others.
 
-To see what other nodes the first disruptor peer knows about, visit it with a web browser:
+To see what other nodes a disruptor peer knows about, visit it with a web browser:
 
     http://127.0.0.1:1111
 
-Usually this is done machine to machine with network accessible IP addresses, not all on the same 
-host as in this example.
+In a production environment, rather than 127.0.0.1 you would use a network accessible interface
+and run one instance on each machine.
 
 Creating Worker Apps
 --------------------
@@ -115,8 +119,8 @@ distributed to other nodes by disruptor so you would have to do that by hand.
 
 Starting Workers
 ----------------
-You start workers by telling one of the nodes to tell all the peers it knows about to start
-a particular application.
+You start workers by telling one of the running nodes to tell all the peers it knows about to start
+a particular application. If we had the first example mesh still running, we might do this:
 
     disruptor start 127.0.0.1:1111 apps/wordcount/counter
 
@@ -137,7 +141,8 @@ compressed archive, distribute it and then start it on all known peers.
 Sending Compute Tasks to Workers
 --------------------------------
 You can send json payloads to be processed to any node in the cluster through an HTTP socket
-connection. The task will be sent to a random worker and responses will flow back the same way.
+connection. The task will be sent to a single random worker and responses will flow back the 
+same way.
 
     disruptor send 127.0.0.1:1111 apps/wordcount/counter \
     "{'the quick brown fox jumped over the lazy dog'}"
@@ -149,7 +154,7 @@ Alternatively, you can send requests directly via HTTP:
     {'the quick brown fox jumped over the lazy dog'}
     EOF
 
-JSON results come back as expected.
+JSON results come back in the body of the HTTP response.
 
     { message: 'the quick brown fox jumped over the lazy dog',
         total: 9,
@@ -167,12 +172,13 @@ Author
 
 Please get in touch if you would like to contribute.
 
-Are You Using This?
--------------------
-I started this project to do distributed natural language processing and machine learning. However,
-I'm sure the need to massively distribute node.js processing exists for many other jobs. I'm interested
-in solving real-world problems with disruptor so it is useful to know what jobs it is or isn't solving. 
-Please tweet [http://twitter.com/anders94](@anders94) or otherwise get in touch.
+Are You Using This? Let me know!
+--------------------------------
+I started this project to do distributed natural language processing and machine 
+learning. However, I'm sure the need to massively distribute node.js processing 
+exists for many other jobs. I'm interested in solving real-world problems with 
+disruptor so it is useful to know what jobs it is or isn't solving. Please tweet 
+[http://twitter.com/anders94](@anders94) or otherwise get in touch.
 
 Copyright and license
 ---------------------
