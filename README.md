@@ -1,4 +1,4 @@
-disruptor
+Disruptor
 =========
 
 <img src="http://anders.com/1offs/disruptor.png" width="400" height="228" alt="disruptor" align="right" />
@@ -17,7 +17,7 @@ There is no master peer, monitoring peer or other single point of failure. The d
 simplicity wherever possible and requires minimal setup.
 
 **Note:** Some things, such as the automatic packaging and distribution of client applications, 
-are not yet implemented. This is a work in progress and any help is appriciated.
+are not yet implemented. This is a work in progress.
 
 Install
 -----
@@ -47,20 +47,27 @@ In another shell:
 
     disruptor peer 127.0.0.1:2222 127.0.0.1:11111
 
-The processes should find each other. Start a few more and point each to one of the live nodes in 
-the network and they should all find all the others.
+The peers should find each other. Start a few more peers and point each to one of the other peers in 
+the mesh and they should all find all the others.
 
-To see what other nodes a disruptor peer knows about, visit it with a web browser:
+To see what other peers a disruptor peer knows about, visit it with a web browser:
 
     http://127.0.0.1:1111
 
-In a production environment, rather than 127.0.0.1 you would use a network accessible interface
-and run one instance on each machine.
+In a production environment, rather than 127.0.0.1, you would use a network accessible interface
+and run one peer on each machine.
+
+There should be no setup beyond this. Peers that die or become inaccessible should automatically 
+removed from the mesh over time. Simulate this by shutting down a peer and watch it get removed.
+
+Be careful about running directly addressible peers on the live Internet. There isn't security 
+yet so, although highly improbible, if someone else's mesh were to find your mesh, the meshes 
+would attempt to merge. Usually meshes are run on private address ranges such as 192.168.0.0/16, 
+172.16.0.0/12 or 10.0.0.0/8 without direct Internet addressibility.
 
 Creating Worker Apps
 --------------------
-Workers run code that lives in app directories under apps/ (for example apps/wordcount) and 
-respond to:
+Worker applications exist in directories under apps/ (for example apps/wordcount) and respond to:
 
 ```javascript
 process.on('message', function() { ... }) 
@@ -72,7 +79,7 @@ They emit results with:
 process.send( ... );
 ```
 
-For example, here is a word counting worker:
+For example, here is an example word counting worker:
 
 ```javascript
 var natural = require('natural'),
@@ -94,12 +101,12 @@ process.on('message', function(message) {
     });
 ```
 
-With this example, this input:
+Given this input:
 ```
 The First World War was to be the war to end all wars.
 ```
 
-creates this output:
+you should get this output:
 ```
 { message: 'The First World War was to be the war to end all wars.',
     total: 13,
